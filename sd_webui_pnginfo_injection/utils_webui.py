@@ -1,4 +1,3 @@
-
 def get_grid_from_res(res):
     index_of_first_image = res.index_of_first_image
 
