@@ -1,6 +1,8 @@
 import json
 import re
 
+from sd_webui_pnginfo_injection.logger import my_print
+
 # Enhanced regular expression to support all JSON formats and plain text
 re_param_code = r'\s*(\w[\w \-/]+):\s*({.*?}|\[.*?\]|"(?:\\.|[^\\"])*"|[^,]*)(?:,|$)'
 re_param = re.compile(re_param_code)
@@ -68,7 +70,7 @@ Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 965400086, Size: 512x512, Model
                     v = v.strip()
 
             except Exception as e:
-                print(f"Error parsing \"{k}: {v}\": {e}")
+                my_print(f"Error parsing \"{k}: {v}\": {e}")
 
         res[k] = v
 

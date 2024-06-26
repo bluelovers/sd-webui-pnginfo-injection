@@ -1,5 +1,6 @@
 import json
 
+from sd_webui_pnginfo_injection.logger import my_print
 from sd_webui_pnginfo_injection.pnginfo import parse_generation_parameters
 from sd_webui_pnginfo_injection.utils import try_parse_load, dict_to_infotext
 
@@ -7,11 +8,20 @@ from sd_webui_pnginfo_injection.utils import try_parse_load, dict_to_infotext
 def add_resource_hashes(params):
     x = _add_resource_hashes_core_parameters(params)
 
-    if x is not None:
-        res, resource_hashes = x
+    if x is None:
+        my_print("Error: params.pnginfo['parameters'] not exists")
+    else:
+        res, resource_hashes, hashes_is_changed = x
 
-        if len(resource_hashes) > 0:
-            res["Hashes"] = json.dumps(resource_hashes)
+        if len(resource_hashes) <= 0:
+            my_print("Hashes is empty")
+        elif not hashes_is_changed or len(resource_hashes) <= 0:
+            my_print("Hashes is not changed")
+        else:
+            hashes = json.dumps(resource_hashes)
+            my_print("Hashes is update", hashes)
+
+            res["Hashes"] = hashes
             params.pnginfo['parameters'] = dict_to_infotext(res)
 
 
@@ -23,13 +33,14 @@ def _add_resource_hashes_core_parameters(params):
 
     res = parse_generation_parameters(getattr(params.pnginfo, "parameters"))
 
-    resource_hashes = _add_resource_hashes_core_dict(res)
+    resource_hashes, hashes_is_changed = _add_resource_hashes_core_dict(res)
 
-    return res, resource_hashes
+    return res, resource_hashes, hashes_is_changed
 
 
 def _add_resource_hashes_core_dict(res: dict):
     resource_hashes = {}
+    hashes_is_changed = False
 
     if "Hashes" in res:
         if isinstance(res["Hashes"], str):
@@ -37,18 +48,18 @@ def _add_resource_hashes_core_dict(res: dict):
         else:
             resource_hashes = res["Hashes"]
 
-    if "Model hash" in res:
-        _add_to_resource_hashes(resource_hashes, "model", res["Model hash"])
-    if "VAE hash" in res:
-        _add_to_resource_hashes(resource_hashes, "vae", res["VAE hash"])
+    hash_keys = {"Model hash": "model", "VAE hash": "vae"}
+    for res_key, hash_key in hash_keys.items():
+        if res_key in res:
+            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, hash_key, res[res_key])
 
     if "TI hashes" in res:
         ti_hashes = try_parse_load(res, key="TI hashes", default_val={}, fn=parse_generation_parameters)
         for k, v in ti_hashes.items():
+            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"embed:{k}", v)
             _key = f"embed:{k}"
-            _add_to_resource_hashes(resource_hashes, f"embed:{k}", v)
 
-    return resource_hashes
+    return resource_hashes, hashes_is_changed
 
 
 def _add_to_resource_hashes(resource_hashes: dict, key: str, val):
@@ -56,5 +67,9 @@ def _add_to_resource_hashes(resource_hashes: dict, key: str, val):
         if isinstance(val, str):
             if len(val):
                 resource_hashes[key] = val
+                return True
         elif val:
             resource_hashes[key] = val
+            return True
+
+    return False
