@@ -2,6 +2,7 @@ import modules.scripts as scripts
 from modules import script_callbacks
 from modules.script_callbacks import ImageSaveParams
 
+from sd_webui_pnginfo_injection.logger import my_print
 from sd_webui_pnginfo_injection.on_before_image_saved import add_resource_hashes, _add_resource_hashes_core_dict
 from sd_webui_pnginfo_injection.utils_webui import get_grid_from_res
 
@@ -22,6 +23,7 @@ class Script(scripts.Script):
         resource_hashes, hashes_is_changed = _add_resource_hashes_core_dict(p.extra_generation_params)
 
         if hashes_is_changed:
+            my_print("Hashes is update", resource_hashes)
             p.extra_generation_params["Hashes"] = resource_hashes
 
     def postprocess(
