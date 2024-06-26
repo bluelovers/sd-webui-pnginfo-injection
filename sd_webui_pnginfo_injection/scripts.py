@@ -35,6 +35,16 @@ class Script(scripts.Script):
         add_resource_hashes(image_save_params)
         pass
 
+    def process(self, p):
+        my_print("process")
+
+        resource_hashes, hashes_is_changed = _add_resource_hashes_core_dict(p.extra_generation_params, p)
+
+        if hashes_is_changed:
+            p.extra_generation_params["Hashes"] = resource_hashes
+
+        pass
+
     def process_batch(self, p, *args, **kwargs):
         # my_print("process_batch")
         pass

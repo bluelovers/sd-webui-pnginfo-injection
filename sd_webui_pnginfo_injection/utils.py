@@ -64,7 +64,8 @@ def lazy_getattr(res, key, default=None):
 
     if hasattr(res, key):
         val = getattr(res, key)
-    else:
+
+    if val is None:
         try:
             val = res.get(key)
         except Exception as e:
@@ -77,3 +78,6 @@ def lazy_getattr(res, key, default=None):
                 pass
 
     return val if val is not None else default
+
+def _get_effective_prompt(prompts: list[str], prompt: str) -> str:
+    return prompts[0] if prompts else prompt
