@@ -1,5 +1,3 @@
-from modules import script_callbacks
+from sd_webui_pnginfo_injection.scripts import Script
 
-from sd_webui_pnginfo_injection.on_before_image_saved import add_resource_hashes
-
-script_callbacks.on_before_image_saved(add_resource_hashes)
+__all__ = ["Script"]
