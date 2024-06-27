@@ -80,11 +80,15 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict=None
         elif p is not None and lazy_getattr(p, p_key):
             hashes_is_changed |= _add_to_resource_hashes(resource_hashes, hash_key, lazy_getattr(p, p_key))
 
-    if "TI hashes" in res:
-        ti_hashes = try_parse_load(res, key="TI hashes", default_val={},
-                                   fn=lambda x: parse_generation_parameters(json_loads(x)))
-        for k, v in ti_hashes.items():
-            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"embed:{k}", v)
+    hash_keys2 = {"TI hashes": ["embed"], "Lora hashes": ["lora"]}
+    for res_key, [hash_key] in hash_keys2.items():
+        ti_hashes = None
+        if res_key in res:
+            ti_hashes = try_parse_load(res, key=res_key, default_val={},
+                                       fn=lambda x: parse_generation_parameters(json_loads(x)))
+        if ti_hashes:
+            for k, v in ti_hashes.items():
+                hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"{hash_key}:{k}", v)
 
     """
     hard core add hashes
