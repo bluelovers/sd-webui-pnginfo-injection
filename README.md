@@ -8,3 +8,6 @@
 
 https://github.com/bluelovers/sd-webui-pnginfo-injection
 
+![img.png](docs/img.png)
+
+![img2.png](docs/img2.png)
