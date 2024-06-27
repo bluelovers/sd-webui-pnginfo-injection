@@ -16,12 +16,14 @@ def add_resource_hashes(params):
         res, resource_hashes, hashes_is_changed = x
 
         if len(resource_hashes) <= 0:
-            my_print("Hashes is empty")
-        elif not hashes_is_changed:
-            my_print("Hashes is not changed", resource_hashes)
+            # my_print("Hashes is empty")
+            pass
+        # elif not hashes_is_changed:
+        #     # my_print("Hashes is not changed", resource_hashes)
+        #     pass
         else:
             hashes = json.dumps(resource_hashes)
-            my_print("Hashes is update", hashes)
+            # my_print("Hashes is update", hashes)
 
             res["Hashes"] = hashes
             params.pnginfo['parameters'] = dict_to_infotext(res)
@@ -56,16 +58,20 @@ def _add_resource_hashes_core_parameters(params, p=None):
     return res, resource_hashes, hashes_is_changed
 
 
-def _add_resource_hashes_core_dict(res: dict, p=None):
-    resource_hashes = {}
+def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict=None):
+    if resource_hashes is None:
+        resource_hashes = {}
+
     hashes_is_changed = False
 
     if "Hashes" in res:
         xx = lazy_getattr(res, "Hashes")
         if isinstance(xx, str):
-            resource_hashes = try_parse_load(res, key="Hashes", default_val={})
-        elif xx:
-            resource_hashes = xx
+            xx = json_loads(xx)
+            # resource_hashes = resource_hashes | try_parse_load(res, key="Hashes", default_val={})
+
+        if xx and xx != resource_hashes:
+            resource_hashes.update(xx)
 
     hash_keys = {"Model hash": ["model", "sd_model_hash"], "VAE hash": ["vae", "sd_vae_hash"]}
     for res_key, [hash_key, p_key] in hash_keys.items():
