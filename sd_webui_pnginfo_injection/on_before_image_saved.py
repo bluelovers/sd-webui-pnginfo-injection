@@ -4,11 +4,11 @@ from sd_webui_pnginfo_injection.bundle_hashes import bundle_hashes
 from sd_webui_pnginfo_injection.logger import my_print
 from sd_webui_pnginfo_injection.pnginfo import parse_generation_parameters
 from sd_webui_pnginfo_injection.utils import try_parse_load, dict_to_infotext, json_loads, lazy_getattr, \
-    _get_effective_prompt, remove_comments
+    _get_effective_prompt, remove_comments, load_hashes
 
 
 def add_resource_hashes(params):
-    x = _add_resource_hashes_core_parameters(params)
+    x = _add_resource_hashes_core_params(params)
 
     if x is None:
         my_print("Error: params.pnginfo['parameters'] not exists") if False else ""
@@ -43,7 +43,7 @@ def _try_get_parameters(params) -> str:
         my_print("Error: params.pnginfo['parameters'] not exists", params.pnginfo)
 
 
-def _add_resource_hashes_core_parameters(params, p=None):
+def _add_resource_hashes_core_params(params, p=None):
     """
     https://github.com/civitai/sd_civitai_extension
     """
@@ -51,6 +51,10 @@ def _add_resource_hashes_core_parameters(params, p=None):
     if not parameters:
         return
 
+    return _add_resource_hashes_core_pnginfo_parameters(parameters, p)
+
+
+def _add_resource_hashes_core_pnginfo_parameters(parameters, p=None):
     res = parse_generation_parameters(parameters)
 
     resource_hashes, hashes_is_changed = _add_resource_hashes_core_dict(res, p)
@@ -58,7 +62,7 @@ def _add_resource_hashes_core_parameters(params, p=None):
     return res, resource_hashes, hashes_is_changed
 
 
-def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict=None):
+def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = None):
     if resource_hashes is None:
         resource_hashes = {}
 
@@ -85,7 +89,7 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict=None
         ti_hashes = None
         if res_key in res:
             ti_hashes = try_parse_load(res, key=res_key, default_val={},
-                                       fn=lambda x: parse_generation_parameters(json_loads(x)))
+                                       fn=load_hashes)
         if ti_hashes:
             for k, v in ti_hashes.items():
                 hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"{hash_key}:{k}", v)

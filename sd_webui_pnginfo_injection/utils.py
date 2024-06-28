@@ -20,7 +20,7 @@ def quote(text):
     return json.dumps(text, ensure_ascii=False)
 
 
-def json_loads(v: str, k: str = ""):
+def json_loads(v: str, k: str = "") -> str | list | dict | bool | float | int:
     try:
         v = v.strip()
 
@@ -80,9 +80,23 @@ def lazy_getattr(res, key, default=None):
 
     return val if val is not None else default
 
+
 def _get_effective_prompt(prompts: list[str], prompt: str) -> str:
     return prompts[0] if prompts else prompt
+
 
 def remove_comments(text: str) -> str:
     return re.sub(r'#.*$', '', text, flags=re.MULTILINE)
 
+
+def load_hashes(hashes: str | dict) -> dict:
+    hashes = json_loads(hashes)
+    if isinstance(hashes, str):
+        res = {}
+        re_param_code = r'\s*(\w[^:]+):\s*(\w+)\s*(?:,|$)'
+        re_param = re.compile(re_param_code)
+        for k, v in re_param.findall(hashes):
+            v = json_loads(v, k)
+            res[k] = v
+        hashes = res
+    return hashes

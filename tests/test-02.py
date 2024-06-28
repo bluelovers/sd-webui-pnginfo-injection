@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from sd_webui_pnginfo_injection.on_before_image_saved import _add_resource_hashes_core_parameters, \
+from sd_webui_pnginfo_injection.on_before_image_saved import _add_resource_hashes_core_params, \
     _add_resource_hashes_core_dict
 from sd_webui_pnginfo_injection.pnginfo import parse_generation_parameters
 
