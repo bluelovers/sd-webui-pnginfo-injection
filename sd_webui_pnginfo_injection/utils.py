@@ -1,4 +1,5 @@
 import json
+import re
 
 from sd_webui_pnginfo_injection.logger import my_print
 
@@ -81,3 +82,7 @@ def lazy_getattr(res, key, default=None):
 
 def _get_effective_prompt(prompts: list[str], prompt: str) -> str:
     return prompts[0] if prompts else prompt
+
+def remove_comments(text: str) -> str:
+    return re.sub(r'#.*$', '', text, flags=re.MULTILINE)
+

@@ -4,7 +4,7 @@ from sd_webui_pnginfo_injection.bundle_hashes import bundle_hashes
 from sd_webui_pnginfo_injection.logger import my_print
 from sd_webui_pnginfo_injection.pnginfo import parse_generation_parameters
 from sd_webui_pnginfo_injection.utils import try_parse_load, dict_to_infotext, json_loads, lazy_getattr, \
-    _get_effective_prompt
+    _get_effective_prompt, remove_comments
 
 
 def add_resource_hashes(params):
@@ -97,6 +97,7 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict=None
     if p is not None:
         original_prompt = _get_effective_prompt(p.all_prompts, p.prompt)
         if original_prompt:
+            original_prompt = remove_comments(original_prompt)
 
             def _add_wildcards(name: str):
                 _add_to_resource_hashes(resource_hashes, f"wildcards:{name}", bundle_hashes[name])
@@ -104,11 +105,8 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict=None
             if 'lazy-wildcards' in original_prompt:
                 _add_wildcards("lazy-wildcards")
                 _add_wildcards("C0rn_Fl4k3s")
-
-            if '__cf-' in original_prompt or '__crea-' in original_prompt or '__cornf-' in original_prompt:
+            elif '__cf-' in original_prompt or '__crea-' in original_prompt or '__cornf-' in original_prompt:
                 _add_wildcards("C0rn_Fl4k3s")
-
-    # resource_hashes["others:014F70D45B"] = "014F70D45B"
 
     return resource_hashes, hashes_is_changed
 
