@@ -4,7 +4,7 @@ from sd_webui_pnginfo_injection.bundle_hashes import bundle_hashes
 from sd_webui_pnginfo_injection.logger import my_print
 from sd_webui_pnginfo_injection.pnginfo import parse_generation_parameters
 from sd_webui_pnginfo_injection.utils import try_parse_load, dict_to_infotext, json_loads, lazy_getattr, \
-    _get_effective_prompt, remove_comments, load_hashes
+    _get_effective_prompt, remove_comments, load_hashes, overwrite_sort_dict_by_prefixes_in_place
 
 
 def add_resource_hashes(params):
@@ -84,7 +84,7 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
         elif p is not None and lazy_getattr(p, p_key):
             hashes_is_changed |= _add_to_resource_hashes(resource_hashes, hash_key, lazy_getattr(p, p_key))
 
-    hash_keys2 = {"TI hashes": ["embed"], "Lora hashes": ["lora"]}
+    hash_keys2 = {"Lora hashes": ["lora"], "TI hashes": ["embed"]}
     for res_key, [hash_key] in hash_keys2.items():
         ti_hashes = None
         if res_key in res:
@@ -111,6 +111,13 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
                 _add_wildcards("C0rn_Fl4k3s")
             elif '__cf-' in original_prompt or '__crea-' in original_prompt or '__cornf-' in original_prompt:
                 _add_wildcards("C0rn_Fl4k3s")
+
+    prefixes = [
+        "model",
+        "lora:",
+        "lazy-wildcards:",
+    ]
+    overwrite_sort_dict_by_prefixes_in_place(resource_hashes, prefixes)
 
     return resource_hashes, hashes_is_changed
 

@@ -100,3 +100,30 @@ def load_hashes(hashes: str | dict) -> dict:
             res[k] = v
         hashes = res
     return hashes
+
+
+def overwrite_sort_dict_by_prefixes_in_place(d, prefixes):
+    # 提取带有指定前缀的键及其顺序
+    prefixed_keys = {prefix: [] for prefix in prefixes}
+    other_keys = []
+
+    for key in list(d.keys()):
+        matched = False
+        for prefix in prefixes:
+            if key.startswith(prefix):
+                prefixed_keys[prefix].append(key)
+                matched = True
+                break
+        if not matched:
+            other_keys.append(key)
+
+    # 将 prefixed_keys 中的键按照前缀顺序重新插入到字典中
+    for prefix in prefixes:
+        for key in prefixed_keys[prefix]:
+            d[key] = d.pop(key)
+
+    # 保持其他键的原有顺序
+    for key in other_keys:
+        d[key] = d.pop(key)
+
+    return d
