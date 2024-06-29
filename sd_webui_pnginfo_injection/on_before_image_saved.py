@@ -115,7 +115,8 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
     prefixes = [
         "model",
         "lora:",
-        "lazy-wildcards:",
+        "wildcards:",
+        "embed:",
     ]
     overwrite_sort_dict_by_prefixes_in_place(resource_hashes, prefixes)
 
