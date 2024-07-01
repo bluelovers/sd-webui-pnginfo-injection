@@ -11,3 +11,14 @@ https://github.com/bluelovers/sd-webui-pnginfo-injection
 ![img.png](docs/img.png)
 
 ![img2.png](docs/img2.png)
+
+## Install
+
+To install in the WebUI, clone this repository under `Extensions` -> `Install from URL` by simply copy and paste here
+
+```
+https://github.com/bluelovers/sd-webui-pnginfo-injection.git
+```
+
+![img_1.png](docs/img_1.png)
+
