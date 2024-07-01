@@ -20,11 +20,11 @@ When uploading images on Civitai, although the modules used are automatically de
 
 > in civitai upload image
 
-![img_2.png](docs/img_2.png)
+![img.png](docs/img.png)
 
 > with a1111 raw
 
-![img.png](docs/img.png)
+![img_2.png](docs/img_2.png)
 
 > with [sd-webui-pnginfo-beautify](https://github.com/bluelovers/sd-webui-pnginfo-beautify)
 
