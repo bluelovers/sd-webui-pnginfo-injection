@@ -36,6 +36,10 @@ When uploading images on Civitai, although the modules used are automatically de
 
 WIP (Work In Progress).
 
+> with [sd-webui-pnginfo-beautify](https://github.com/bluelovers/sd-webui-pnginfo-beautify)
+
+![img_3.png](docs/img_3.png)
+
 ## Install
 
 To install in the WebUI, clone this repository under `Extensions` -> `Install from URL` by simply copy and paste here
