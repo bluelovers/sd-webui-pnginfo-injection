@@ -114,6 +114,9 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
             if '__cf-' in original_prompt or '__crea-' in original_prompt or '__cornf-' in original_prompt:
                 _add_wildcards("C0rn_Fl4k3s")
 
+            if '__Bo/' in original_prompt:
+                _add_wildcards("Billions-of-Wildcards")
+
     prefixes = [
         "model",
         "lora:",
