@@ -108,8 +108,10 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
 
             if 'lazy-wildcards' in original_prompt:
                 _add_wildcards("lazy-wildcards")
-                _add_wildcards("C0rn_Fl4k3s")
-            elif '__cf-' in original_prompt or '__crea-' in original_prompt or '__cornf-' in original_prompt:
+                if 'lazy-wildcards/dataset/background' in original_prompt:
+                    _add_wildcards("C0rn_Fl4k3s")
+
+            if '__cf-' in original_prompt or '__crea-' in original_prompt or '__cornf-' in original_prompt:
                 _add_wildcards("C0rn_Fl4k3s")
 
     prefixes = [
