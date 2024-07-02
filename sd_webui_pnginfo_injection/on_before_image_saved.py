@@ -1,4 +1,5 @@
 import json
+import re
 
 from sd_webui_pnginfo_injection.bundle_hashes import bundle_hashes
 from sd_webui_pnginfo_injection.logger import my_print
@@ -108,6 +109,7 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
 
             if 'lazy-wildcards' in original_prompt:
                 _add_wildcards("lazy-wildcards")
+                original_prompt = re.sub(r'__lazy-wildcards/dataset/background-color__', '', original_prompt)
                 if 'lazy-wildcards/dataset/background' in original_prompt:
                     _add_wildcards("C0rn_Fl4k3s")
 
