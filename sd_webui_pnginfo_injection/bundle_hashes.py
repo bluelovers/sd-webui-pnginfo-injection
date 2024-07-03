@@ -1,10 +1,11 @@
+from enum import Enum, unique
 
-bundle_hashes = {
+
+@unique
+class EnumBundleHashes(Enum):
     # https://civitai.com/models/481009
-    "C0rn_Fl4k3s": "DCD9BC82A8",
+    C0rn_Fl4k3s = "DCD9BC82A8"
     # https://civitai.com/models/449400
-    "lazy-wildcards": "532F010BCC",
-
+    lazy_wildcards = "532F010BCC"
     # https://civitai.com/models/138970
-    "Billions-of-Wildcards": "462B82E7EF",
-}
+    Billions_of_Wildcards = "462B82E7EF"

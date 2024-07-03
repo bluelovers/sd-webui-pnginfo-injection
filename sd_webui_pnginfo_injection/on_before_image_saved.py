@@ -1,7 +1,7 @@
 import json
 import re
 
-from sd_webui_pnginfo_injection.bundle_hashes import bundle_hashes
+from sd_webui_pnginfo_injection.bundle_hashes import EnumBundleHashes
 from sd_webui_pnginfo_injection.logger import my_print
 from sd_webui_pnginfo_injection.pnginfo import parse_generation_parameters
 from sd_webui_pnginfo_injection.utils import try_parse_load, dict_to_infotext, json_loads, lazy_getattr, \
@@ -104,20 +104,20 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
         if original_prompt:
             original_prompt = remove_comments(original_prompt)
 
-            def _add_wildcards(name: str):
-                _add_to_resource_hashes(resource_hashes, f"wildcards:{name}", bundle_hashes[name])
+            def _add_wildcards(name: EnumBundleHashes):
+                _add_to_resource_hashes(resource_hashes, f"wildcards:{name.name}", name.value)
 
             if 'lazy-wildcards' in original_prompt:
-                _add_wildcards("lazy-wildcards")
+                _add_wildcards(EnumBundleHashes.lazy_wildcards)
                 original_prompt = re.sub(r'__lazy-wildcards/dataset/background-color__', '', original_prompt)
                 if 'lazy-wildcards/dataset/background' in original_prompt:
-                    _add_wildcards("C0rn_Fl4k3s")
+                    _add_wildcards(EnumBundleHashes.C0rn_Fl4k3s)
 
             if '__cf-' in original_prompt or '__crea-' in original_prompt or '__cornf-' in original_prompt:
-                _add_wildcards("C0rn_Fl4k3s")
+                _add_wildcards(EnumBundleHashes.C0rn_Fl4k3s)
 
             if '__Bo/' in original_prompt:
-                _add_wildcards("Billions-of-Wildcards")
+                _add_wildcards(EnumBundleHashes.Billions_of_Wildcards)
 
     prefixes = [
         "model",
