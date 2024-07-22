@@ -38,7 +38,7 @@ jobs:
       if: success()
       run: |
         git add ./sd_webui_pnginfo_injection/bundle_hashes.py
-        git commit -m 'build: update bundle_hashes.py' ./sd_webui_pnginfo_injection/bundle_hashes.py
+        git commit -m 'build: update bundle_hashes.py' ./sd_webui_pnginfo_injection/bundle_hashes.py & echo .
     -
       name: Push changes
       if: success()
