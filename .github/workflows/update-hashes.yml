@@ -1,0 +1,47 @@
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  schedule:
+# https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows#scheduled-events-schedule
+#            ┌───────────── minute (0 - 59)
+#            │ ┌───────────── hour (0 - 23)
+#            │ │ ┌───────────── day of the month (1 - 31)
+#            │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+#            │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+#            │ │ │ │ │
+#            │ │ │ │ │
+#            │ │ │ │ │
+#            * * * * *
+    - cron: '0 12 1 * *'
+    - cron: '0 12 15 * *'
+
+jobs:
+  main-action:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+    -
+      name: setup git config
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+    - run: python .dev/update-hashes.py
+    -
+      name: git commit
+      if: success()
+      run: |
+        git add ./sd_webui_pnginfo_injection/bundle_hashes.py
+        git commit -m 'build: update bundle_hashes.py' ./sd_webui_pnginfo_injection/bundle_hashes.py
+    -
+      name: Push changes
+      if: success()
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
