@@ -29,7 +29,7 @@ def update_bundle_hashes(api_key: str = None):
 
     print(f"auto_v2_hash: {auto_v2_hash}")
 
-    bundle_hashes_file = "../sd_webui_pnginfo_injection/bundle_hashes.py"
+    bundle_hashes_file = "./sd_webui_pnginfo_injection/bundle_hashes.py"
     hashes_name = 'C0rn_Fl4k3s'
 
     if auto_v2_hash and len(auto_v2_hash) == 10:
