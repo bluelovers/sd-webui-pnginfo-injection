@@ -32,7 +32,7 @@ def get_model_hashes(id: str | int, api_key: str = None):
 
     print(f"auto_v2_hash({id}): {auto_v2_hash}, {name}, {version_name}")
 
-    if len(auto_v2_hash) == 10:
+    if auto_v2_hash and len(auto_v2_hash) == 10:
         return auto_v2_hash
 
     print("Error: auto_v2_hash not found or length is not 10")
@@ -43,7 +43,7 @@ def update_bundle_hashes(api_key: str = None):
 
     bundle_hashes_file = "./sd_webui_pnginfo_injection/bundle_hashes.py"
 
-    if (C0rn_Fl4k3s and len(C0rn_Fl4k3s) == 10) or (lazy_wildcards and len(lazy_wildcards) == 10):
+    if C0rn_Fl4k3s or lazy_wildcards:
         with open(bundle_hashes_file, "r") as file:
             lines = file.readlines()
 
