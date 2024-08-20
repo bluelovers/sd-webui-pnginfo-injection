@@ -5,7 +5,7 @@ from sd_webui_pnginfo_injection.bundle_hashes import EnumBundleHashes
 from sd_webui_pnginfo_injection.logger import my_print
 from sd_webui_pnginfo_injection.pnginfo import parse_generation_parameters
 from sd_webui_pnginfo_injection.utils import try_parse_load, dict_to_infotext, json_loads, lazy_getattr, \
-    _get_effective_prompt, remove_comments, load_hashes, overwrite_sort_dict_by_prefixes_in_place
+    _get_effective_prompt, remove_comments, load_hashes, overwrite_sort_dict_by_prefixes_in_place, extract_wildcards
 
 
 def add_resource_hashes(params):
@@ -104,9 +104,16 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
     https://github.com/adieyal/sd-dynamic-prompts/issues/793
     """
     if p is not None:
-        original_prompt = _get_effective_prompt(p.all_prompts, p.prompt)
+        original_prompt_source = _get_effective_prompt(p.all_prompts, p.prompt)
+        original_prompt = remove_comments(original_prompt_source)
         if original_prompt:
-            original_prompt = remove_comments(original_prompt)
+
+            exists_dynamic_prompts = False
+
+            if not exists_dynamic_prompts:
+                wildcards = extract_wildcards(original_prompt)
+                if len(wildcards):
+                    exists_dynamic_prompts = True
 
             def _add_wildcards(name: EnumBundleHashes):
                 _add_to_resource_hashes(resource_hashes, f"wildcards:{name.name}", name.value)
@@ -117,13 +124,21 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
                 if 'lazy-wildcards/dataset/background' in original_prompt:
                     _add_wildcards(EnumBundleHashes.C0rn_Fl4k3s)
 
+                exists_dynamic_prompts = True
+
             patterns = ['__cf-', '__crea-', '__cornf-', '__cof-']
 
             if any(pattern in original_prompt for pattern in patterns):
                 _add_wildcards(EnumBundleHashes.C0rn_Fl4k3s)
+                exists_dynamic_prompts = True
 
             if '__Bo/' in original_prompt:
                 _add_wildcards(EnumBundleHashes.Billions_of_Wildcards)
+                exists_dynamic_prompts = True
+
+            if exists_dynamic_prompts and 'sv_prompt' not in res and 'Wildcard Prompt' not in res:
+                res['sv_prompt'] = original_prompt_source
+                pass
 
     prefixes = [
         "model",

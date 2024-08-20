@@ -85,8 +85,9 @@ def _get_effective_prompt(prompts: list[str], prompt: str) -> str:
     return prompts[0] if prompts else prompt
 
 
-def remove_comments(text: str) -> str:
-    return re.sub(r'#.*$', '', text, flags=re.MULTILINE)
+def remove_comments(text: str) -> str | None:
+    if text is not None:
+        return re.sub(r'#.*$', '', text, flags=re.MULTILINE)
 
 
 def load_hashes(hashes: str | dict) -> dict:
@@ -127,3 +128,43 @@ def overwrite_sort_dict_by_prefixes_in_place(d, prefixes):
         d[key] = d.pop(key)
 
     return d
+
+wildcard_pattern = r'__(?P<order>[!~@])?(?P<wildcard>[A-Za-z0-9*]+[/A-Za-z0-9_*-]*)(?:\((?P<condition>[A-Za-z0-9_*-]+=!?.*?)\))?__'
+
+def extract_wildcards(text: str, findall: bool = False):
+    """
+    https://github.com/adieyal/sd-dynamic-prompts/blob/main/docs/SYNTAX.md
+    """
+    matches = re.findall(wildcard_pattern, text) if findall else re.search(wildcard_pattern, text)
+    wildcards: list[dict[str, str]] = []
+    if matches is not None:
+        if not isinstance(matches, list):
+            order, wildcard, condition = matches.groups()
+            wildcards.append({
+                'order': order,
+                'wildcard': wildcard,
+                'condition': condition
+            })
+        else:
+            for match in matches:
+                order, wildcard, condition = match
+                wildcards.append({
+                    'order': order,
+                    'wildcard': wildcard,
+                    'condition': condition
+                })
+    return wildcards
+
+def get_first_exists_entry(res: dict, *args):
+    for key in args:
+        value = res.get(key)
+        if value is not None:
+            return key, value
+    return None, None
+
+def _lazy_params(params, k1: str, v1, k2: str):
+    _lazy_params_val(params, k1, v1, params.get(k2))
+
+def _lazy_params_val(params, k1: str, v1, v2):
+    if v2 is not None and v1 is not None and v1 != v2:
+        params[k1] = v1

@@ -30,7 +30,7 @@ When uploading images on Civitai, although the modules used are automatically de
 
 ![img2.png](docs/img2.png)
 
-### `Template Generated Grid` , `Template Generated`
+### `Template Generated Grid` , `Template Generated`, `Wildcard Prompt`
 
 > for `sd-dynamic-prompts`
 
