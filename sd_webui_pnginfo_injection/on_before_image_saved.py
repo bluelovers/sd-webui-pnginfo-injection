@@ -78,10 +78,14 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
         if xx and xx != resource_hashes:
             resource_hashes.update(xx)
 
-    hash_keys = {"Model hash": ["model", "sd_model_hash"], "VAE hash": ["vae", "sd_vae_hash"]}
-    for res_key, [hash_key, p_key] in hash_keys.items():
+    hash_keys = {"Model hash": ["model", "sd_model_hash", "Model"], "VAE hash": ["vae", "sd_vae_hash", "VAE"]}
+    for res_key, [hash_key, p_key, res_name_key] in hash_keys.items():
         if res_key in res:
-            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, hash_key, res[res_key])
+            k = res[res_name_key]
+            v = res[res_key]
+
+            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, hash_key, v)
+            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"{hash_key}:{k}", v)
         elif p is not None and lazy_getattr(p, p_key):
             hashes_is_changed |= _add_to_resource_hashes(resource_hashes, hash_key, lazy_getattr(p, p_key))
 
