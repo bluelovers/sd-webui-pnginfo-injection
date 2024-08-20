@@ -10,8 +10,8 @@ from modules import script_callbacks
 
 from sd_webui_pnginfo_injection.logger import my_print, extension_label
 from sd_webui_pnginfo_injection.on_before_image_saved import add_resource_hashes, _add_resource_hashes_core_dict
-from sd_webui_pnginfo_injection.utils import _get_effective_prompt
-from sd_webui_pnginfo_injection.utils_webui import get_grid_from_res
+from sd_webui_pnginfo_injection.utils import get_first_exists_entry, _lazy_params_val, _lazy_params, lazy_getattr
+
 
 class Script(scripts.Script):
     def __init__(self):
@@ -76,6 +76,23 @@ class Script(scripts.Script):
 
     def process_batch(self, p, *args, **kwargs):
         self._hook_event("process_batch", f"p.extra_generation_params: {len(p.extra_generation_params)}", show_label=False)
+
+        res = p.extra_generation_params
+
+        if lazy_getattr(res, 'Template Generated') is None and lazy_getattr(res, 'Template'):
+
+            key, value = get_first_exists_entry(res, 'sv_prompt', 'Wildcard Prompt', 'Template')
+
+            if key is not None:
+                batch_number = kwargs.get('batch_number')
+                prompts = kwargs.get('prompts')
+
+                _lazy_params_val(res, 'Template Generated', prompts[0], value)
+                _lazy_params(res, 'Negative Template Generated', p.all_negative_prompts[batch_number], 'Negative Template')
+
+                res['Template Seeds'] = kwargs.get('seeds')
+                res['Template Seeds Sub'] = kwargs.get('subseeds')
+
         pass
 
     def postprocess_batch(self, p, *args, **kwargs):
@@ -116,3 +133,4 @@ class Script(scripts.Script):
         my_print(json.dumps(self._stat_counter, indent=2))
 
         pass
+
