@@ -40,10 +40,11 @@ def get_model_hashes(id: str | int, api_key: str = None):
 def update_bundle_hashes(api_key: str = None):
     C0rn_Fl4k3s = get_model_hashes(481009, api_key)
     lazy_wildcards = get_model_hashes(449400, api_key)
+    Billions_of_Wildcards = get_model_hashes(138970, api_key)
 
     bundle_hashes_file = "./sd_webui_pnginfo_injection/bundle_hashes.py"
 
-    if C0rn_Fl4k3s or lazy_wildcards:
+    if C0rn_Fl4k3s or lazy_wildcards or Billions_of_Wildcards:
         with open(bundle_hashes_file, "r") as file:
             lines = file.readlines()
 
@@ -59,6 +60,13 @@ def update_bundle_hashes(api_key: str = None):
             if lazy_wildcards:
                 hashes_name = 'lazy_wildcards'
                 auto_v2_hash = lazy_wildcards
+                if hashes_name in line:
+                    lines[i] = f'    {hashes_name} = "{auto_v2_hash}"\n'
+                    print(f"Updated {hashes_name} value to {auto_v2_hash} in {bundle_hashes_file}")
+
+            if Billions_of_Wildcards:
+                hashes_name = 'Billions_of_Wildcards'
+                auto_v2_hash = Billions_of_Wildcards
                 if hashes_name in line:
                     lines[i] = f'    {hashes_name} = "{auto_v2_hash}"\n'
                     print(f"Updated {hashes_name} value to {auto_v2_hash} in {bundle_hashes_file}")
