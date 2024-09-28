@@ -8,4 +8,4 @@ class EnumBundleHashes(Enum):
     # https://civitai.com/models/449400
     lazy_wildcards = "90066BC5D2"
     # https://civitai.com/models/138970
-    Billions_of_Wildcards = "462B82E7EF"
+    Billions_of_Wildcards = "A872958EED"
