@@ -121,8 +121,12 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
             if 'lazy-wildcards' in original_prompt:
                 _add_wildcards(EnumBundleHashes.lazy_wildcards)
                 original_prompt = re.sub(r'__lazy-wildcards/dataset/background-color__', '', original_prompt)
-                if 'lazy-wildcards/dataset/background' in original_prompt:
+
+                patterns = ['__lazy-wildcards/dataset/background__', '__lazy-wildcards/background/anything__', '__lazy-wildcards/costume/clothes__']
+                
+                if any(pattern in original_prompt for pattern in patterns):
                     _add_wildcards(EnumBundleHashes.C0rn_Fl4k3s)
+                    _add_wildcards(EnumBundleHashes.Billions_of_Wildcards)
 
                 exists_dynamic_prompts = True
 
@@ -132,7 +136,9 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
                 _add_wildcards(EnumBundleHashes.C0rn_Fl4k3s)
                 exists_dynamic_prompts = True
 
-            if '__Bo/' in original_prompt:
+            patterns = ['__Bo/', '__properties/']
+
+            if any(pattern in original_prompt for pattern in patterns):
                 _add_wildcards(EnumBundleHashes.Billions_of_Wildcards)
                 exists_dynamic_prompts = True
 
