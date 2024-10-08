@@ -30,6 +30,10 @@ When uploading images on Civitai, although the modules used are automatically de
 
 ![img2.png](docs/img2.png)
 
+> with [Tiefsee](https://github.com/hbl917070/Tiefsee4)
+
+![img.png](docs/img-Tiefsee.png)
+
 ### `Template Generated Grid` , `Template Generated`, `Wildcard Prompt`
 
 > for `sd-dynamic-prompts`
