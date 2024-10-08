@@ -136,6 +136,10 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
                 _add_wildcards(EnumBundleHashes.Billions_of_Wildcards)
                 exists_dynamic_prompts = True
 
+            if '__navi_atlas/' in original_prompt:
+                _add_wildcards(EnumBundleHashes.navi_atlas)
+                exists_dynamic_prompts = True
+
             if exists_dynamic_prompts and 'sv_prompt' not in res and 'Wildcard Prompt' not in res:
                 res['sv_prompt'] = original_prompt_source
                 pass
