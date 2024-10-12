@@ -1,7 +1,7 @@
 import json
 import re
 
-from sd_webui_pnginfo_injection.bundle_hashes import EnumBundleHashes
+from sd_webui_pnginfo_injection.bundle_hashes import EnumBundleHashes, myBundleHashesSettings
 from sd_webui_pnginfo_injection.logger import my_print
 from sd_webui_pnginfo_injection.pnginfo import parse_generation_parameters
 from sd_webui_pnginfo_injection.utils import try_parse_load, dict_to_infotext, json_loads, lazy_getattr, \
@@ -130,21 +130,26 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
 
                 exists_dynamic_prompts = True
 
-            patterns = ['__cf-', '__crea-', '__cornf-', '__cof-']
+            for hashes_name, patterns in myBundleHashesSettings:
+                if any(pattern in original_prompt for pattern in patterns):
+                    _add_wildcards(hashes_name)
+                    exists_dynamic_prompts = True
 
-            if any(pattern in original_prompt for pattern in patterns):
-                _add_wildcards(EnumBundleHashes.C0rn_Fl4k3s)
-                exists_dynamic_prompts = True
-
-            patterns = ['__Bo/', '__properties/']
-
-            if any(pattern in original_prompt for pattern in patterns):
-                _add_wildcards(EnumBundleHashes.Billions_of_Wildcards)
-                exists_dynamic_prompts = True
-
-            if '__navi_atlas/' in original_prompt:
-                _add_wildcards(EnumBundleHashes.navi_atlas)
-                exists_dynamic_prompts = True
+            # patterns = ['__cf-', '__crea-', '__cornf-', '__cof-']
+            #
+            # if any(pattern in original_prompt for pattern in patterns):
+            #     _add_wildcards(EnumBundleHashes.C0rn_Fl4k3s)
+            #     exists_dynamic_prompts = True
+            #
+            # patterns = ['__Bo/', '__properties/']
+            #
+            # if any(pattern in original_prompt for pattern in patterns):
+            #     _add_wildcards(EnumBundleHashes.Billions_of_Wildcards)
+            #     exists_dynamic_prompts = True
+            #
+            # if '__navi_atlas/' in original_prompt:
+            #     _add_wildcards(EnumBundleHashes.navi_atlas)
+            #     exists_dynamic_prompts = True
 
             if exists_dynamic_prompts and 'sv_prompt' not in res and 'Wildcard Prompt' not in res:
                 res['sv_prompt'] = original_prompt_source
