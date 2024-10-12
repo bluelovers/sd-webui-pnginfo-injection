@@ -1,3 +1,4 @@
+import os
 import urllib.request
 import json
 import urllib.error
@@ -38,38 +39,52 @@ def get_model_hashes(id: str | int, api_key: str = None):
     print("Error: auto_v2_hash not found or length is not 10")
 
 def update_bundle_hashes(api_key: str = None):
-    C0rn_Fl4k3s = get_model_hashes(481009, api_key)
-    lazy_wildcards = get_model_hashes(449400, api_key)
-    Billions_of_Wildcards = get_model_hashes(138970, api_key)
+    # C0rn_Fl4k3s = get_model_hashes(481009, api_key)
+    # lazy_wildcards = get_model_hashes(449400, api_key)
+    # Billions_of_Wildcards = get_model_hashes(138970, api_key)
 
-    bundle_hashes_file = "./sd_webui_pnginfo_injection/bundle_hashes.py"
+    my_map = {
+        'C0rn_Fl4k3s': get_model_hashes(481009, api_key),
+        'lazy_wildcards': get_model_hashes(449400, api_key),
+        'Billions_of_Wildcards': get_model_hashes(138970, api_key),
+    }
 
-    if C0rn_Fl4k3s or lazy_wildcards or Billions_of_Wildcards:
+    my_map = {key: value for key, value in my_map.items() if value}
+
+    script_path = os.path.abspath(__file__)
+    bundle_hashes_file = os.path.join(os.path.dirname(script_path), "../sd_webui_pnginfo_injection/bundle_hashes.py")
+
+    if len(my_map):
         with open(bundle_hashes_file, "r") as file:
             lines = file.readlines()
 
         for i, line in enumerate(lines):
 
-            if C0rn_Fl4k3s:
-                hashes_name = 'C0rn_Fl4k3s'
-                auto_v2_hash = C0rn_Fl4k3s
-                if hashes_name in line:
+            for hashes_name, auto_v2_hash in my_map.items():
+                if f"{hashes_name} = " in line:
                     lines[i] = f'    {hashes_name} = "{auto_v2_hash}"\n'
                     print(f"Updated {hashes_name} value to {auto_v2_hash} in {bundle_hashes_file}")
 
-            if lazy_wildcards:
-                hashes_name = 'lazy_wildcards'
-                auto_v2_hash = lazy_wildcards
-                if hashes_name in line:
-                    lines[i] = f'    {hashes_name} = "{auto_v2_hash}"\n'
-                    print(f"Updated {hashes_name} value to {auto_v2_hash} in {bundle_hashes_file}")
-
-            if Billions_of_Wildcards:
-                hashes_name = 'Billions_of_Wildcards'
-                auto_v2_hash = Billions_of_Wildcards
-                if hashes_name in line:
-                    lines[i] = f'    {hashes_name} = "{auto_v2_hash}"\n'
-                    print(f"Updated {hashes_name} value to {auto_v2_hash} in {bundle_hashes_file}")
+            # if C0rn_Fl4k3s:
+            #     hashes_name = 'C0rn_Fl4k3s'
+            #     auto_v2_hash = C0rn_Fl4k3s
+            #     if hashes_name in line:
+            #         lines[i] = f'    {hashes_name} = "{auto_v2_hash}"\n'
+            #         print(f"Updated {hashes_name} value to {auto_v2_hash} in {bundle_hashes_file}")
+            #
+            # if lazy_wildcards:
+            #     hashes_name = 'lazy_wildcards'
+            #     auto_v2_hash = lazy_wildcards
+            #     if hashes_name in line:
+            #         lines[i] = f'    {hashes_name} = "{auto_v2_hash}"\n'
+            #         print(f"Updated {hashes_name} value to {auto_v2_hash} in {bundle_hashes_file}")
+            #
+            # if Billions_of_Wildcards:
+            #     hashes_name = 'Billions_of_Wildcards'
+            #     auto_v2_hash = Billions_of_Wildcards
+            #     if hashes_name in line:
+            #         lines[i] = f'    {hashes_name} = "{auto_v2_hash}"\n'
+            #         print(f"Updated {hashes_name} value to {auto_v2_hash} in {bundle_hashes_file}")
 
         with open(bundle_hashes_file, "w", newline='\n') as file:
             file.writelines(lines)
