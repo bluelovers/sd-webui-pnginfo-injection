@@ -1,4 +1,5 @@
 from enum import Enum, unique
+from typing import Dict, List
 
 
 @unique
@@ -22,15 +23,15 @@ class EnumBundleHashes(Enum):
     navi_atlas = "2910F6A456"
 
 
-myBundleHashesSettings = {
-    [EnumBundleHashes.C0rn_Fl4k3s]: ['__cf-', '__crea-', '__cornf-', '__cof-'],
+myBundleHashesSettings: Dict[EnumBundleHashes, List[str]] = {
+    EnumBundleHashes.C0rn_Fl4k3s: ['__cf-', '__crea-', '__cornf-', '__cof-'],
 
     #
 
-    [EnumBundleHashes.Billions_of_Wildcards]: ['__Bo/', '__properties/'],
+    EnumBundleHashes.Billions_of_Wildcards: ['__Bo/', '__properties/'],
 
     #
 
-    [EnumBundleHashes.navi_atlas]: ['__navi_atlas/'],
+    EnumBundleHashes.navi_atlas: ['__navi_atlas/'],
 }
 
