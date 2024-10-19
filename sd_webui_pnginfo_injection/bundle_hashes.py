@@ -15,7 +15,7 @@ class EnumBundleHashes(Enum):
     #
 
     # https://civitai.com/models/138970
-    Billions_of_Wildcards = "A872958EED"
+    Billions_of_Wildcards = "EBDDB113A8"
 
     #
 
