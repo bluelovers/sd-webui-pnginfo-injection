@@ -176,7 +176,7 @@ def _search_and_add_controlnet_hashes(res: dict, resource_hashes: dict):
     for key, value in res.items():
         match = re.search(controlnet_pattern, key)
         if match:
-            value = try_parse_load(value)
+            value = json_loads(value)
             if value:
                 data = parse_generation_parameters_extra(value)
                 if "Model" in data:
