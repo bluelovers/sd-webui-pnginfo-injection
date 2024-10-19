@@ -178,11 +178,14 @@ def _search_and_add_controlnet_hashes(res: dict, resource_hashes: dict):
         if match:
             value = json_loads(value)
             if value:
-                data = parse_generation_parameters_extra(value)
-                if "Model" in data:
-                    name, hash = find_hash_in_name(data["Model"])
-                    if hash:
-                        hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"controlnet:{name.strip()}", hash)
+                try:
+                    data = parse_generation_parameters_extra(value)
+                    if "Model" in data:
+                        name, hash = find_hash_in_name(data["Model"])
+                        if hash:
+                            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"controlnet:{name.strip()}", hash)
+                except Exception as e:
+                    my_print("Error parsing", key, value, name, hash)
 
     return hashes_is_changed
 
