@@ -12,6 +12,14 @@ re_imagesize = re.compile(r"^(\d+)x(\d+)$")
 
 # re_hypernet_hash = re.compile("\(([0-9a-f]+)\)$")
 
+def parse_generation_parameters_extra(lastline: str, res: dict = {}, decode_value=False):
+    # 增加解析和处理数组和对象的逻辑
+    for k, v in re_param.findall(lastline):
+        if decode_value:
+            v = json_loads(v, k)
+        res[k] = v
+    return res
+
 def parse_generation_parameters(x: str, decode_value=False):
     """parses generation parameters string, the one you see in text field under the picture in UI:
 ```
@@ -50,11 +58,12 @@ Steps: 20, Sampler: Euler a, CFG scale: 7, Seed: 965400086, Size: 512x512, Model
         else:
             prompt += ("" if prompt == "" else "\n") + line
 
-    # 增加解析和处理数组和对象的逻辑
-    for k, v in re_param.findall(lastline):
-        if decode_value:
-            v = json_loads(v, k)
-        res[k] = v
+    # # 增加解析和处理数组和对象的逻辑
+    # for k, v in re_param.findall(lastline):
+    #     if decode_value:
+    #         v = json_loads(v, k)
+    #     res[k] = v
+    res = parse_generation_parameters_extra(lastline, res=res, decode_value=decode_value)
 
     prompt = prompt.replace(r'[\x00\u200b]+', '')
     if len(prompt):

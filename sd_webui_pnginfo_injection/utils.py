@@ -1,7 +1,7 @@
 import json
 import re
 
-from sd_webui_pnginfo_injection.logger import my_print
+# from sd_webui_pnginfo_injection.logger import my_print
 
 
 def try_parse_load(res: dict, key: str, fn=json.loads, default_val=None):
@@ -168,3 +168,14 @@ def _lazy_params(params, k1: str, v1, k2: str):
 def _lazy_params_val(params, k1: str, v1, v2):
     if v2 is not None and v1 is not None and v1 != v2:
         params[k1] = v1
+
+def find_hash_in_name(name: str):
+    """
+    find_hash_in_name("control_v11p_sd15_openpose [cab727d4]")
+    """
+    re_hash = r'^(?P<name>.+)\s\[(?P<hash>[A-Za-z0-9]{8,})\]$'
+    match = re.search(re_hash, name)
+    if match is not None:
+        return match.group('name'), match.group('hash')
+    return None, None
+

@@ -3,8 +3,8 @@ import re
 
 from sd_webui_pnginfo_injection.bundle_hashes import EnumBundleHashes, myBundleHashesSettings
 from sd_webui_pnginfo_injection.logger import my_print
-from sd_webui_pnginfo_injection.pnginfo import parse_generation_parameters
-from sd_webui_pnginfo_injection.utils import try_parse_load, dict_to_infotext, json_loads, lazy_getattr, \
+from sd_webui_pnginfo_injection.pnginfo import parse_generation_parameters, parse_generation_parameters_extra
+from sd_webui_pnginfo_injection.utils import find_hash_in_name, try_parse_load, dict_to_infotext, json_loads, lazy_getattr, \
     _get_effective_prompt, remove_comments, load_hashes, overwrite_sort_dict_by_prefixes_in_place, extract_wildcards
 
 
@@ -155,16 +155,36 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
                 res['sv_prompt'] = original_prompt_source
                 pass
 
+    _search_and_add_controlnet_hashes(res, resource_hashes)
+
     prefixes = [
         "model",
         "lora:",
         "wildcards:",
+        "controlnet:",
         "embed:",
     ]
     overwrite_sort_dict_by_prefixes_in_place(resource_hashes, prefixes)
 
     return resource_hashes, hashes_is_changed
 
+def _search_and_add_controlnet_hashes(res: dict, resource_hashes: dict):
+    controlnet_pattern = r"^ControlNet (\d+)$"
+
+    hashes_is_changed = False
+
+    for key, value in res.items():
+        match = re.search(controlnet_pattern, key)
+        if match:
+            value = try_parse_load(value)
+            if value:
+                data = parse_generation_parameters_extra(value)
+                if "Model" in data:
+                    name, hash = find_hash_in_name(data["Model"])
+                    if hash:
+                        hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"controlnet:{name.strip()}", hash)
+
+    return hashes_is_changed
 
 def _add_to_resource_hashes(resource_hashes: dict, key: str, val):
     if key not in resource_hashes:
