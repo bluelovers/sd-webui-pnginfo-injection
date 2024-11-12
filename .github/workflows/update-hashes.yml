@@ -18,6 +18,8 @@ on:
 #            * * * * *
     - cron: '0 12 1 * *'
     - cron: '0 12 15 * *'
+    - cron: '0 12 * * 6'
+    - cron: '0 12 * * 3'
 
 jobs:
   main-action:
