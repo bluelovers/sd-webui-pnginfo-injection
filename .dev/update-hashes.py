@@ -47,6 +47,8 @@ def update_bundle_hashes(api_key: str = None):
         'C0rn_Fl4k3s': get_model_hashes(481009, api_key),
         'lazy_wildcards': get_model_hashes(449400, api_key),
         'Billions_of_Wildcards': get_model_hashes(138970, api_key),
+        'chara_creator': get_model_hashes(863333, api_key),
+        'DaemonaVision': get_model_hashes(934903, api_key),
     }
 
     my_map = {key: value for key, value in my_map.items() if value}
