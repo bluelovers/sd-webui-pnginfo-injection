@@ -23,10 +23,10 @@ class EnumBundleHashes(Enum):
     navi_atlas = "2910F6A456"
 
     # https://civitai.com/models/863333?modelVersionId=969037
-    chara_creator = "EED961CA"
+    chara_creator = "34CA54C12B"
 
     # https://civitai.com/models/934903?modelVersionId=1048755
-    DaemonaVision = "0A7FC0A5C7"
+    DaemonaVision = "2433DD5F60"
 
 
 myBundleHashesSettings: Dict[EnumBundleHashes, List[str]] = {
