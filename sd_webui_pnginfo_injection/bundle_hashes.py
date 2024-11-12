@@ -25,6 +25,9 @@ class EnumBundleHashes(Enum):
     # https://civitai.com/models/863333?modelVersionId=969037
     chara_creator = "EED961CA"
 
+    # https://civitai.com/models/934903?modelVersionId=1048755
+    DaemonaVision = "0A7FC0A5C7"
+
 
 myBundleHashesSettings: Dict[EnumBundleHashes, List[str]] = {
     EnumBundleHashes.C0rn_Fl4k3s: ['__cf-', '__crea-', '__cornf-', '__cof-'],
@@ -40,6 +43,10 @@ myBundleHashesSettings: Dict[EnumBundleHashes, List[str]] = {
     #
 
     EnumBundleHashes.chara_creator: ['__chara_creator/'],
+
+    #
+
+    EnumBundleHashes.DaemonaVision: ['__Vision/'],
 
     #
 }
