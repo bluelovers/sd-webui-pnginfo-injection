@@ -26,7 +26,7 @@ class EnumBundleHashes(Enum):
     chara_creator = "34CA54C12B"
 
     # https://civitai.com/models/934903?modelVersionId=1048755
-    DaemonaVision = "4135C93896"
+    DaemonaVision = "9EB8C2D539"
 
 
 myBundleHashesSettings: Dict[EnumBundleHashes, List[str]] = {
