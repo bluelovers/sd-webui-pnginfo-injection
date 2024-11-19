@@ -127,7 +127,7 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
                 if any(pattern in original_prompt for pattern in patterns):
                     _add_wildcards(EnumBundleHashes.C0rn_Fl4k3s)
                     _add_wildcards(EnumBundleHashes.Billions_of_Wildcards)
-                    _add_wildcards(EnumBundleHashes.DaemonaVision)
+                    # _add_wildcards(EnumBundleHashes.DaemonaVision)
 
                 exists_dynamic_prompts = True
 
