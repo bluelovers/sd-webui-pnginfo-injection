@@ -44,6 +44,13 @@ WIP (Work In Progress).
 
 ![img_3.png](docs/img_3.png)
 
+### ADetailer (After Detailer)
+
+- https://feedback.civitai.com/p/should-add-adetailer-type-or-allow-upload-pt-safetensors-in
+- https://github.com/Bing-su/adetailer/issues/675
+
+![img-ADetailer.png](docs/img-ADetailer.png)
+
 ## Install
 
 To install in the WebUI, clone this repository under `Extensions` -> `Install from URL` by simply copy and paste here

@@ -1,12 +1,15 @@
 import json
 import re
+from pathlib import Path
 
 from sd_webui_pnginfo_injection.bundle_hashes import EnumBundleHashes, myBundleHashesSettings
 from sd_webui_pnginfo_injection.logger import my_print
 from sd_webui_pnginfo_injection.pnginfo import parse_generation_parameters, parse_generation_parameters_extra
 from sd_webui_pnginfo_injection.utils import find_hash_in_name, try_parse_load, dict_to_infotext, json_loads, lazy_getattr, \
     _get_effective_prompt, remove_comments, load_hashes, overwrite_sort_dict_by_prefixes_in_place, extract_wildcards
+from sd_webui_pnginfo_injection.utils_hashes import hashes_auto_v2
 
+from modules.paths_internal import models_path
 
 def add_resource_hashes(params):
     x = _add_resource_hashes_core_params(params)
@@ -157,12 +160,14 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
                 pass
 
     _search_and_add_controlnet_hashes(res, resource_hashes)
+    _search_and_add_adetailer_hashes(res, resource_hashes)
 
     prefixes = [
         "model",
         "lora:",
         "wildcards:",
         "controlnet:",
+        "adetailer:",
         "embed:",
     ]
     overwrite_sort_dict_by_prefixes_in_place(resource_hashes, prefixes)
@@ -182,13 +187,36 @@ def _search_and_add_controlnet_hashes(res: dict, resource_hashes: dict):
                 try:
                     data = parse_generation_parameters_extra(value)
                     if "Model" in data:
-                        name, hash = find_hash_in_name(data["Model"])
-                        if hash:
-                            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"controlnet:{name.strip()}", hash)
+                        name, hash_value = find_hash_in_name(data["Model"])
+                        if hash_value:
+                            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"controlnet:{name.strip()}", hash_value)
                 except Exception as e:
-                    my_print("Error parsing", key, value, name, hash)
+                    my_print("Error parsing", key, value, name, hash_value)
 
     return hashes_is_changed
+
+def _search_and_add_adetailer_hashes(res: dict, resource_hashes: dict):
+    re_pattern = r"^ADetailer model( \S+)?$"
+
+    hashes_is_changed = False
+
+    models_path_obj = Path(models_path).joinpath("adetailer")
+    prefixes = "adetailer"
+
+    for key, value in res.items():
+        match = re.search(re_pattern, key)
+        if match and value:
+            file = models_path_obj.joinpath(value)
+            try:
+                hash_value = hashes_auto_v2(file, f'{prefixes}/{value}')
+                if hash_value:
+                    hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"{prefixes}:{value}",
+                                                                     hash_value)
+            except Exception as e:
+                my_print("Error parsing", key, value, hash_value, file)
+
+    return hashes_is_changed
+
 
 def _add_to_resource_hashes(resource_hashes: dict, key: str, val):
     if key not in resource_hashes:
