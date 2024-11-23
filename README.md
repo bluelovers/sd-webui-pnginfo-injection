@@ -51,6 +51,10 @@ WIP (Work In Progress).
 
 ![img-ADetailer.png](docs/img-ADetailer.png)
 
+### ControlNet
+
+![img-ControlNet.png](docs/img-ControlNet.png)
+
 ## Install
 
 To install in the WebUI, clone this repository under `Extensions` -> `Install from URL` by simply copy and paste here
