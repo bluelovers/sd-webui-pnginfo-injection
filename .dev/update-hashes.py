@@ -55,7 +55,8 @@ def update_bundle_hashes(api_key: str = None):
 
     my_map = {}
 
-    for hashes_name, { id } in myBundleHashesSettings.items():
+    for hashes_name, settings in myBundleHashesSettings.items():
+        id = settings.get('id')
         if id:
             my_map[hashes_name] = get_model_hashes(id, api_key)
 
