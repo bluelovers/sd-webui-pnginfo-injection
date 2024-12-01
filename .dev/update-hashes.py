@@ -2,6 +2,12 @@ import os
 import urllib.request
 import json
 import urllib.error
+import sys
+
+print(f"B={sys.path}")
+sys.path.append('/home/runner/work/sd-webui-pnginfo-injection/sd-webui-pnginfo-injection')
+print(f"A={sys.path}")
+
 from sd_webui_pnginfo_injection.bundle_hashes import myBundleHashesSettings
 
 def get_model_hashes(id: str | int, api_key: str = None):
