@@ -90,7 +90,7 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
             # if bool(res_name_key and res_name_key in res and res[res_name_key]):
             #     hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"{hash_key}:{res[res_name_key]}", v)
         elif p is not None and lazy_getattr(p, p_key):
-            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, hash_key, lazy_getattr(p, p_key))
+            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, hash_key, lazy_getattr(p, p_key), True)
 
     hash_keys2 = {"Lora hashes": ["lora"], "TI hashes": ["embed"]}
     for res_key, [hash_key] in hash_keys2.items():
@@ -222,7 +222,7 @@ def _search_and_add_adetailer_hashes(res: dict, resource_hashes: dict):
 def _add_to_resource_hashes(resource_hashes: dict, key: str, val, overwrite: bool = False):
 
     if overwrite or key not in resource_hashes:
-        old_v = resource_hashes.get(key)
+        old_v = lazy_getattr(resource_hashes, key)
         bool = isinstance(val, str)
         if (bool and len(val)) or (not bool and val):
             new_v = val[:10]
