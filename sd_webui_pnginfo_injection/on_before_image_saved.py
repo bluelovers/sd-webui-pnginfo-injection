@@ -222,7 +222,7 @@ def _search_and_add_adetailer_hashes(res: dict, resource_hashes: dict):
 def _add_to_resource_hashes(resource_hashes: dict, key: str, val, overwrite: bool = False):
 
     if overwrite or key not in resource_hashes:
-        old_v = resource_hashes[key]
+        old_v = resource_hashes.get(key)
         bool = isinstance(val, str)
         if (bool and len(val)) or (not bool and val):
             new_v = val[:10]
