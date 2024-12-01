@@ -46,7 +46,7 @@ class BundleHashSettings(TypedDict, total=False):
     id: Union[str, int]
     patterns: List[str]
 
-myBundleHashesSettings: Dict[EnumBundleHashes, BundleHashSettings]] = {
+myBundleHashesSettings: Dict[EnumBundleHashes, BundleHashSettings] = {
 
     #
 

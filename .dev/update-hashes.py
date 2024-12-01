@@ -4,8 +4,11 @@ import json
 import urllib.error
 import sys
 
+script_path = os.path.abspath(__file__)
+
+
 print(f"B={sys.path}")
-sys.path.append('/home/runner/work/sd-webui-pnginfo-injection/sd-webui-pnginfo-injection')
+sys.path.append(os.path.join(os.path.dirname(script_path), ".."))
 print(f"A={sys.path}")
 
 from sd_webui_pnginfo_injection.bundle_hashes import myBundleHashesSettings
