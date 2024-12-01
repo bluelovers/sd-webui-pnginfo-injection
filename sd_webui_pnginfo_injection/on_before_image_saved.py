@@ -85,7 +85,7 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
     for res_key, [hash_key, p_key, res_name_key] in hash_keys.items():
         if res_key in res:
             v = res[res_key]
-            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, hash_key, v)
+            hashes_is_changed |= _add_to_resource_hashes(resource_hashes, hash_key, v, True)
 
             # if bool(res_name_key and res_name_key in res and res[res_name_key]):
             #     hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"{hash_key}:{res[res_name_key]}", v)
@@ -219,14 +219,14 @@ def _search_and_add_adetailer_hashes(res: dict, resource_hashes: dict):
     return hashes_is_changed
 
 
-def _add_to_resource_hashes(resource_hashes: dict, key: str, val):
-    if key not in resource_hashes:
-        if isinstance(val, str):
-            if len(val):
-                resource_hashes[key] = val[:10]
-                return True
-        elif val:
-            resource_hashes[key] = val[:10]
-            return True
+def _add_to_resource_hashes(resource_hashes: dict, key: str, val, overwrite: bool = False):
+
+    if overwrite or key not in resource_hashes:
+        old_v = resource_hashes[key]
+        bool = isinstance(val, str)
+        if (bool and len(val)) or (not bool and val):
+            new_v = val[:10]
+            resource_hashes[key] = new_v
+            return old_v != new_v
 
     return False
