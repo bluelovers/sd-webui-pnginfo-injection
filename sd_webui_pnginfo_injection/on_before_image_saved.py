@@ -134,8 +134,8 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
 
                 exists_dynamic_prompts = True
 
-            for hashes_name, patterns in myBundleHashesSettings.items():
-                if any(pattern in original_prompt for pattern in patterns):
+            for hashes_name, { patterns } in myBundleHashesSettings.items():
+                if patterns and any(pattern in original_prompt for pattern in patterns):
                     _add_wildcards(hashes_name)
                     exists_dynamic_prompts = True
 

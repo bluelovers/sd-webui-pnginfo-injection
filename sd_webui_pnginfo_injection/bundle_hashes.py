@@ -1,9 +1,12 @@
 from enum import Enum, unique
-from typing import Dict, List
+from typing import Dict, List, TypedDict, Union
 
 
 @unique
 class EnumBundleHashes(Enum):
+
+    #
+
     # https://civitai.com/models/481009
     C0rn_Fl4k3s = "E5C633CC29"
 
@@ -34,34 +37,63 @@ class EnumBundleHashes(Enum):
 
     #
 
-    # https://civitai.com/models/934903?modelVersionId=1048755
+    # https://civitai.com/models/989125
     tglove = "C751EFD866"
 
     #
 
+class BundleHashSettings(TypedDict, total=False):
+    id: Union[str, int]
+    patterns: List[str]
 
-myBundleHashesSettings: Dict[EnumBundleHashes, List[str]] = {
-    EnumBundleHashes.C0rn_Fl4k3s: ['__cf-', '__crea-', '__cornf-', '__cof-'],
-
-    #
-
-    EnumBundleHashes.Billions_of_Wildcards: ['__Bo/', '__properties/'],
+myBundleHashesSettings: Dict[EnumBundleHashes, BundleHashSettings]] = {
 
     #
 
-    EnumBundleHashes.navi_atlas: ['__navi_atlas/'],
+    EnumBundleHashes.lazy_wildcards: {
+        id: 449400,
+    },
 
     #
 
-    EnumBundleHashes.chara_creator: ['__chara_creator/'],
+    EnumBundleHashes.C0rn_Fl4k3s: {
+        id: 481009,
+        "patterns": ['__cf-', '__crea-', '__cornf-', '__cof-'],
+    },
 
     #
 
-    EnumBundleHashes.DaemonaVision: ['__Vision/'],
+    EnumBundleHashes.Billions_of_Wildcards: {
+        id: 138970,
+        "patterns": ['__Bo/', '__properties/'],
+    },
 
     #
 
-    EnumBundleHashes.tglove: ['__tglove/'],
+    EnumBundleHashes.navi_atlas: {
+        "patterns": ['__navi_atlas/'],
+    },
+
+    #
+
+    EnumBundleHashes.chara_creator: {
+        id: 863333,
+        "patterns": ['__chara_creator/'],
+    },
+
+    #
+
+    EnumBundleHashes.DaemonaVision: {
+        id: 934903,
+        "patterns": ['__Vision/'],
+    },
+
+    #
+
+    EnumBundleHashes.tglove: {
+        id: 989125,
+        "patterns": ['__tglove/'],
+    },
 
     #
 }

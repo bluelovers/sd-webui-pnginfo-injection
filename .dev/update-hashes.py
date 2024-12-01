@@ -2,6 +2,7 @@ import os
 import urllib.request
 import json
 import urllib.error
+from ..sd_webui_pnginfo_injection.bundle_hashes import myBundleHashesSettings
 
 def get_model_hashes(id: str | int, api_key: str = None):
     # token = api_key
@@ -43,14 +44,20 @@ def update_bundle_hashes(api_key: str = None):
     # lazy_wildcards = get_model_hashes(449400, api_key)
     # Billions_of_Wildcards = get_model_hashes(138970, api_key)
 
-    my_map = {
-        'C0rn_Fl4k3s': get_model_hashes(481009, api_key),
-        'lazy_wildcards': get_model_hashes(449400, api_key),
-        'Billions_of_Wildcards': get_model_hashes(138970, api_key),
-        'chara_creator': get_model_hashes(863333, api_key),
-        'DaemonaVision': get_model_hashes(934903, api_key),
-        'tglove': get_model_hashes(989125, api_key),
-    }
+    # my_map = {
+    #     'C0rn_Fl4k3s': get_model_hashes(481009, api_key),
+    #     'lazy_wildcards': get_model_hashes(449400, api_key),
+    #     'Billions_of_Wildcards': get_model_hashes(138970, api_key),
+    #     'chara_creator': get_model_hashes(863333, api_key),
+    #     'DaemonaVision': get_model_hashes(934903, api_key),
+    #     'tglove': get_model_hashes(989125, api_key),
+    # }
+
+    my_map = {}
+
+    for hashes_name, { id } in myBundleHashesSettings.items():
+        if id:
+            my_map[hashes_name] = get_model_hashes(id, api_key)
 
     my_map = {key: value for key, value in my_map.items() if value}
 
