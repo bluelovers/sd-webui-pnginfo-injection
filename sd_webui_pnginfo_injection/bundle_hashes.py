@@ -34,6 +34,11 @@ class EnumBundleHashes(Enum):
 
     #
 
+    # https://civitai.com/models/934903?modelVersionId=1048755
+    tglove = "C751EFD866"
+
+    #
+
 
 myBundleHashesSettings: Dict[EnumBundleHashes, List[str]] = {
     EnumBundleHashes.C0rn_Fl4k3s: ['__cf-', '__crea-', '__cornf-', '__cof-'],
@@ -53,6 +58,10 @@ myBundleHashesSettings: Dict[EnumBundleHashes, List[str]] = {
     #
 
     EnumBundleHashes.DaemonaVision: ['__Vision/'],
+
+    #
+
+    EnumBundleHashes.tglove: ['__tglove/'],
 
     #
 }

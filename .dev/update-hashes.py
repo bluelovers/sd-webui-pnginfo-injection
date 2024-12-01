@@ -49,6 +49,7 @@ def update_bundle_hashes(api_key: str = None):
         'Billions_of_Wildcards': get_model_hashes(138970, api_key),
         'chara_creator': get_model_hashes(863333, api_key),
         'DaemonaVision': get_model_hashes(934903, api_key),
+        'tglove': get_model_hashes(989125, api_key),
     }
 
     my_map = {key: value for key, value in my_map.items() if value}
