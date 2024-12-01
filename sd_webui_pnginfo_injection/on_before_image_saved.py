@@ -87,8 +87,8 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
             v = res[res_key]
             hashes_is_changed |= _add_to_resource_hashes(resource_hashes, hash_key, v)
 
-            if bool(res_name_key and res_name_key in res and res[res_name_key]):
-                hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"{hash_key}:{res[res_name_key]}", v)
+            # if bool(res_name_key and res_name_key in res and res[res_name_key]):
+            #     hashes_is_changed |= _add_to_resource_hashes(resource_hashes, f"{hash_key}:{res[res_name_key]}", v)
         elif p is not None and lazy_getattr(p, p_key):
             hashes_is_changed |= _add_to_resource_hashes(resource_hashes, hash_key, lazy_getattr(p, p_key))
 
