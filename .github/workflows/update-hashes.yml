@@ -34,7 +34,9 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-    - run: python -m .dev/update-hashes.py
+    - run: |
+        cd .dev/
+        python update-hashes.py
     -
       name: git commit
       if: success()
