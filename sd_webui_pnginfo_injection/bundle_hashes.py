@@ -51,20 +51,20 @@ myBundleHashesSettings: Dict[EnumBundleHashes, BundleHashSettings] = {
     #
 
     EnumBundleHashes.lazy_wildcards: {
-        id: 449400,
+        "id": 449400,
     },
 
     #
 
     EnumBundleHashes.C0rn_Fl4k3s: {
-        id: 481009,
+        "id": 481009,
         "patterns": ['__cf-', '__crea-', '__cornf-', '__cof-'],
     },
 
     #
 
     EnumBundleHashes.Billions_of_Wildcards: {
-        id: 138970,
+        "id": 138970,
         "patterns": ['__Bo/', '__properties/'],
     },
 
@@ -77,21 +77,21 @@ myBundleHashesSettings: Dict[EnumBundleHashes, BundleHashSettings] = {
     #
 
     EnumBundleHashes.chara_creator: {
-        id: 863333,
+        "id": 863333,
         "patterns": ['__chara_creator/'],
     },
 
     #
 
     EnumBundleHashes.DaemonaVision: {
-        id: 934903,
+        "id": 934903,
         "patterns": ['__Vision/'],
     },
 
     #
 
     EnumBundleHashes.tglove: {
-        id: 989125,
+        "id": 989125,
         "patterns": ['__tglove/'],
     },
 
