@@ -13,7 +13,7 @@ class EnumBundleHashes(Enum):
     #
 
     # https://civitai.com/models/449400
-    lazy_wildcards = "566FACEC5D"
+    lazy_wildcards = "A89E1CB606"
 
     #
 
@@ -38,7 +38,7 @@ class EnumBundleHashes(Enum):
     #
 
     # https://civitai.com/models/989125
-    tglove = "C751EFD866"
+    tglove = "C0203E2711"
 
     #
 
