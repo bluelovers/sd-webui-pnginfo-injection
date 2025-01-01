@@ -42,6 +42,11 @@ class EnumBundleHashes(Enum):
 
     #
 
+    # https://civitai.com/models/1068767/otokonokofemboytrap-sex-wildcard
+    beloved_otokonoko_sex = "06878D1C29"
+
+    #
+
 class BundleHashSettings(TypedDict, total=False):
     id: Union[str, int]
     patterns: List[str]
@@ -93,6 +98,13 @@ myBundleHashesSettings: Dict[EnumBundleHashes, BundleHashSettings] = {
     EnumBundleHashes.tglove: {
         "id": 989125,
         "patterns": ['__tglove/'],
+    },
+
+    #
+
+    EnumBundleHashes.beloved_otokonoko_sex: {
+        "id": 1068767,
+        "patterns": ['__beloved-otokonoko-sex/'],
     },
 
     #
