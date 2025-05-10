@@ -48,7 +48,7 @@ class EnumBundleHashes(Enum):
     #
 
     # https://civitai.com/models/1487187/cybercelibate-purityguardtm-wildcards
-    PurityGuard = "D11A482609"
+    PurityGuard = "BF6C2FDD38"
 
     #
 
