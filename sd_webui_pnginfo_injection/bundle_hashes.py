@@ -47,6 +47,11 @@ class EnumBundleHashes(Enum):
 
     #
 
+    # https://civitai.com/models/1487187/cybercelibate-purityguardtm-wildcards
+    PurityGuard = "BF6C2FDD38"
+
+    #
+
 class BundleHashSettings(TypedDict, total=False):
     id: Union[str, int]
     patterns: List[str]
@@ -105,6 +110,13 @@ myBundleHashesSettings: Dict[EnumBundleHashes, BundleHashSettings] = {
     EnumBundleHashes.beloved_otokonoko_sex: {
         "id": 1068767,
         "patterns": ['__beloved-otokonoko-sex/'],
+    },
+
+    #
+
+    EnumBundleHashes.PurityGuard: {
+        "id": 1068767,
+        "patterns": ['__PurityGuard/'],
     },
 
     #
