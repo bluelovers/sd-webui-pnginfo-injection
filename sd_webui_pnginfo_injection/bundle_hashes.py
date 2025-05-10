@@ -13,7 +13,7 @@ class EnumBundleHashes(Enum):
     #
 
     # https://civitai.com/models/449400
-    lazy_wildcards = "A89E1CB606"
+    lazy_wildcards = "EFB1445A34"
 
     #
 
@@ -43,7 +43,7 @@ class EnumBundleHashes(Enum):
     #
 
     # https://civitai.com/models/1068767/otokonokofemboytrap-sex-wildcard
-    beloved_otokonoko_sex = "06878D1C29"
+    beloved_otokonoko_sex = "D11A482609"
 
     #
 
