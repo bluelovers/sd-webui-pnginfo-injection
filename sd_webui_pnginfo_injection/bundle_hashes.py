@@ -115,7 +115,7 @@ myBundleHashesSettings: Dict[EnumBundleHashes, BundleHashSettings] = {
     #
 
     EnumBundleHashes.PurityGuard: {
-        "id": 1068767,
+        "id": 1487187,
         "patterns": ['__PurityGuard/'],
     },
 
