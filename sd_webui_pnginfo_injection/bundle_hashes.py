@@ -52,6 +52,11 @@ class EnumBundleHashes(Enum):
 
     #
 
+    # https://civitai.com/models/1569839/mge-wildcards
+    MGE_Wildcards = "38A99F6EDF"
+
+    #
+
 class BundleHashSettings(TypedDict, total=False):
     id: Union[str, int]
     patterns: List[str]
@@ -117,6 +122,13 @@ myBundleHashesSettings: Dict[EnumBundleHashes, BundleHashSettings] = {
     EnumBundleHashes.PurityGuard: {
         "id": 1487187,
         "patterns": ['__PurityGuard/'],
+    },
+
+    #
+
+    EnumBundleHashes.MGE_Wildcards: {
+        "id": 1569839,
+        "patterns": ['__MGE/'],
     },
 
     #
