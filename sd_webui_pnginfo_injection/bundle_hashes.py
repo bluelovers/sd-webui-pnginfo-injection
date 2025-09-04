@@ -57,6 +57,16 @@ class EnumBundleHashes(Enum):
 
     #
 
+    # https://civitai.com/models/1918220/ii-cosplays-and-more-ii-dark-fantasy-reforge-wildcards-yaml-file-txt
+    EroticVibes_1918220 = "5F6BADAAE9"
+
+    #
+
+    # https://civitai.com/models/1925392/ll-cosplays-and-more-ll-medieval-fantasy-reforge-wildcards-yaml-file-txt
+    EroticVibes_1925392 = "9EC1C8713B"
+
+    #
+
 class BundleHashSettings(TypedDict, total=False):
     id: Union[str, int]
     patterns: List[str]
@@ -129,6 +139,20 @@ myBundleHashesSettings: Dict[EnumBundleHashes, BundleHashSettings] = {
     EnumBundleHashes.MGE_Wildcards: {
         "id": 1569839,
         "patterns": ['__MGE/'],
+    },
+
+    #
+
+    EnumBundleHashes.EroticVibes_1918220: {
+        "id": 1918220,
+        "patterns": ['__cdfy/'],
+    },
+
+    #
+
+    EnumBundleHashes.EroticVibes_1925392: {
+        "id": 1925392,
+        "patterns": ['__cmfy/'],
     },
 
     #
