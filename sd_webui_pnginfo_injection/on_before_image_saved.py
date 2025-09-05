@@ -1,6 +1,7 @@
 import json
 import re
 from pathlib import Path
+import fnmatch
 
 from sd_webui_pnginfo_injection.bundle_hashes import EnumBundleHashes, myBundleHashesSettings
 from sd_webui_pnginfo_injection.logger import my_print
@@ -136,9 +137,21 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
 
             for hashes_name, settings in myBundleHashesSettings.items():
                 patterns = settings.get('patterns')
-                if patterns and any(pattern in original_prompt for pattern in patterns):
-                    _add_wildcards(hashes_name)
-                    exists_dynamic_prompts = True
+                # if patterns and any(pattern in original_prompt for pattern in patterns):
+
+                if patterns:
+                    match_type = None
+                    for pattern in patterns:
+                        if pattern in original_prompt:
+                            match_type = 'exact'
+                            break
+                        elif fnmatch.fnmatch(original_prompt, pattern):
+                            match_type = 'wildcard'
+                            break
+
+                    if match_type:
+                        _add_wildcards(hashes_name)
+                        exists_dynamic_prompts = True
 
             # patterns = ['__cf-', '__crea-', '__cornf-', '__cof-']
             #
