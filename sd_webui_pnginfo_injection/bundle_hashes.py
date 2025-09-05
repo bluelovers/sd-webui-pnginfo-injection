@@ -68,7 +68,7 @@ class EnumBundleHashes(Enum):
     #
 
     # https://civitai.com/models/1888684/ii-cosplays-and-more-ii-listes-wildcards-fantasy-world
-    EroticVibes_1888684 = "1926B1E41B"
+    EroticVibes_1888684 = "9EC1C8713B"
 
     #
 
