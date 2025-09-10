@@ -58,12 +58,12 @@ class EnumBundleHashes(Enum):
     #
 
     # https://civitai.com/models/1918220/ii-cosplays-and-more-ii-dark-fantasy-reforge-wildcards-yaml-file-txt
-    EroticVibes_1918220 = "5F6BADAAE9"
+    EroticVibes_1918220 = "EB2124199D"
 
     #
 
     # https://civitai.com/models/1925392/ll-cosplays-and-more-ll-medieval-fantasy-reforge-wildcards-yaml-file-txt
-    EroticVibes_1925392 = "9EC1C8713B"
+    EroticVibes_1925392 = "EB2124199D"
 
     #
 
