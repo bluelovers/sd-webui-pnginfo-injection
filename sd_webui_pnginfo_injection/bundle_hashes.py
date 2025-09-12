@@ -58,7 +58,7 @@ class EnumBundleHashes(Enum):
     #
 
     # https://civitai.com/models/1918220/ii-cosplays-and-more-ii-dark-fantasy-reforge-wildcards-yaml-file-txt
-    EroticVibes_1918220 = "EB2124199D"
+    # EroticVibes_1918220 = "EB2124199D"
 
     #
 
@@ -148,10 +148,10 @@ myBundleHashesSettings: Dict[EnumBundleHashes, BundleHashSettings] = {
 
     #
 
-    EnumBundleHashes.EroticVibes_1918220: {
-        "id": 1918220,
-        "patterns": ['__cdfy/'],
-    },
+    # EnumBundleHashes.EroticVibes_1918220: {
+    #     "id": 1918220,
+    #     "patterns": ['__cdfy/'],
+    # },
 
     #
 
