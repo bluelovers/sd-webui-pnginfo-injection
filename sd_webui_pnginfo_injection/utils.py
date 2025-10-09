@@ -1,7 +1,7 @@
 import json
 import re
 
-# from sd_webui_pnginfo_injection.logger import my_print
+from sd_webui_pnginfo_injection.logger import my_print
 
 
 def try_parse_load(res: dict, key: str, fn=json.loads, default_val=None):

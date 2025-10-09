@@ -127,7 +127,7 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
                 original_prompt = re.sub(r'__lazy-wildcards/dataset/background-color__', '', original_prompt)
 
                 patterns = ['__lazy-wildcards/dataset/background__', '__lazy-wildcards/background/anything__', '__lazy-wildcards/costume/clothes__']
-                
+
                 if any(pattern in original_prompt for pattern in patterns):
                     _add_wildcards(EnumBundleHashes.C0rn_Fl4k3s)
                     _add_wildcards(EnumBundleHashes.Billions_of_Wildcards)
@@ -175,6 +175,20 @@ def _add_resource_hashes_core_dict(res: dict, p=None, resource_hashes: dict = No
 
     _search_and_add_controlnet_hashes(res, resource_hashes)
     _search_and_add_adetailer_hashes(res, resource_hashes)
+
+    # if "Dynamic Prompts Hashes" in res:
+    #     try:
+    #         v = lazy_getattr(res, "Dynamic Prompts Hashes")
+    #         _map: dict[str, str] = json_loads(v) if isinstance(v, str) else v
+    #
+    #         my_print(_map)
+    #
+    #         if isinstance(_map, dict):
+    #             for k, v in _map.items():
+    #                 _add_to_resource_hashes(resource_hashes, f"wildcards_file:{k}", v)
+    #     except Exception as e:
+    #         my_print(e)
+    #         pass
 
     prefixes = [
         "model",
