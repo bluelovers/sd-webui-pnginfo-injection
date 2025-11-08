@@ -72,6 +72,11 @@ class EnumBundleHashes(Enum):
 
     #
 
+    # https://civitai.com/models/1952576
+    whis_statement_outfits = "D20453B186"
+
+    #
+
 class BundleHashSettings(TypedDict, total=False):
     id: Union[str, int]
     patterns: List[str]
@@ -165,6 +170,13 @@ myBundleHashesSettings: Dict[EnumBundleHashes, BundleHashSettings] = {
     EnumBundleHashes.EroticVibes_1888684: {
         "id": 1888684,
         "patterns": ['__c*fy/'],
+    },
+
+    #
+
+    EnumBundleHashes.whis_statement_outfits: {
+        "id": 1952576,
+        "patterns": ['__whis-statement-outfits/'],
     },
 
     #
