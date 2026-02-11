@@ -13,7 +13,7 @@ class EnumBundleHashes(Enum):
     #
 
     # https://civitai.com/models/449400
-    lazy_wildcards = "99AA925B16"
+    lazy_wildcards = "48DF1C4692"
 
     #
 
